@@ -14,8 +14,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//Controlador que gestiona el nivel educativo alcanzdo por los encuestados 
-//Se declara como una List de arreglos de String. Esto se hace para almacenar múltiples registros de la encuesta, donde cada registro es un arreglo de String
+// Controlador que gestiona el nivel educativo alcanzado por los encuestados
+// Se declara como una List de arreglos de String. Esto se hace para almacenar múltiples registros de la encuesta, donde cada registro es un arreglo de String
 public class ControladorNivelEducativo {
     private List<String[]> datosEncuesta;
     private String[] nivelesEducativos;
@@ -25,7 +25,7 @@ public class ControladorNivelEducativo {
         leerDatosEncuesta();
     }
 
-    //Inicializa los niveles educativos (Son muchos :/ )
+    // Inicializa los niveles educativos (Son muchos :/ )
     private void inicializarNivelesEducativos() {
         nivelesEducativos = new String[11];
         nivelesEducativos[1] = "Sin educación";
@@ -41,11 +41,11 @@ public class ControladorNivelEducativo {
         nivelesEducativos[0] = "Missing Value"; // Usamos el índice 0 para valores vacíos o no válidos
     }
 
-    //Lee los datos de la encuesta que esta en archivo CSV
-    //Se inicializa datosEncuesta como un ArrayList, que permite almacenar una lista dinámica de objetos (cuyo tamaño puede cambiar en tiempo de ejecución si modifico algo)
+    // Lee los datos de la encuesta que están en archivo CSV
+    // Se inicializa datosEncuesta como un ArrayList, que permite almacenar una lista dinámica de objetos (cuyo tamaño puede cambiar en tiempo de ejecución si modifico algo)
     private void leerDatosEncuesta() {
         datosEncuesta = new ArrayList<>();
-        String archivoCSV = "E:/Proyecto/Trim Feb-Mar-Abr22_Muestra.csv";
+        String archivoCSV = "Trim Feb-Mar-Abr22_Muestra.csv"; // Ruta relativa
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
             String linea;
@@ -59,19 +59,18 @@ public class ControladorNivelEducativo {
                 datosEncuesta.add(datos);
             }
         } catch (IOException e) {
-            manejarError(e, "Error al leer el archivo CSV, porfavor retorne al menu principal");
-            
+            manejarError(e, "Error al leer el archivo CSV, por favor retorne al menú principal");
         }
     }
     
-    //Manejo de errores, excepcion IOException y mensaje descriptivo del error
+    // Manejo de errores, excepción IOException y mensaje descriptivo del error
     private static void manejarError(IOException e, String mensaje) {
-    System.err.println(mensaje + ": " + e.getMessage());
-    Errores error = new Errores(e.getMessage(), "No se logro ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
-    ControladorErrores.guardarError(error);
-}
+        System.err.println(mensaje + ": " + e.getMessage());
+        Errores error = new Errores(e.getMessage(), "No se logró ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
+        ControladorErrores.guardarError(error);
+    }
  
-    //Inprime en consola los datos solicitados, en este caso el nivel educativo de los encuestados
+    // Imprime en consola los datos solicitados, en este caso el nivel educativo de los encuestados
     public void imprimirPantalla() {
         System.out.println("Nº\tNIVEL EDUCATIVO");
         System.out.println("====================================================");
@@ -86,9 +85,9 @@ public class ControladorNivelEducativo {
         System.out.println("");
     }
 
-    //Exportamos esos mismos datos solicitados a un archivo de texto TXT
+    // Exportamos esos mismos datos solicitados a un archivo de texto TXT
     public void exportarArchivo() {
-        String archivoExportado = "E:/Proyecto/NivelEducativo.txt";
+        String archivoExportado = "NivelEducativo.txt"; // Ruta relativa
 
         try (FileWriter escritor = new FileWriter(archivoExportado)) {
             escritor.write("Nº\tNIVEL EDUCATIVO\n");

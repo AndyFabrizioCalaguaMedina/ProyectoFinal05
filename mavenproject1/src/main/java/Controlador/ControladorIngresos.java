@@ -9,12 +9,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//Controlador para gestionar los ingresos por ecuestado
+// Controlador para gestionar los ingresos por encuestado
 public class ControladorIngresos {
     private List<String[]> datosEncuesta;
     private String[] tiposTrabajo;
@@ -24,7 +25,7 @@ public class ControladorIngresos {
         leerDatosEncuesta();
     }
 
-    //Inicializar valores por tipo de trabajo en un arreglo
+    // Inicializar valores por tipo de trabajo en un arreglo
     private void inicializarTiposTrabajo() {
         tiposTrabajo = new String[8]; // El tamaño del arreglo es 8 para incluir los índices del 0 al 7
         tiposTrabajo[1] = "Empleador o patrono";
@@ -36,10 +37,11 @@ public class ControladorIngresos {
         tiposTrabajo[7] = "Otro";
         tiposTrabajo[0] = ""; // El 0 para valores vacíos o no válidos
     }
-    //Lee los datos del archivo
+
+    // Lee los datos del archivo
     private void leerDatosEncuesta() {
         datosEncuesta = new ArrayList<>();
-        String archivoCSV = "E:/Proyecto/Trim Feb-Mar-Abr22_Muestra.csv";
+        String archivoCSV = "Trim Feb-Mar-Abr22_Muestra.csv"; // Ruta relativa
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
             String linea;
@@ -53,17 +55,18 @@ public class ControladorIngresos {
                 datosEncuesta.add(datos);
             }
         } catch (IOException e) {
-            manejarError(e, "Error al leer el archivo CSV, porfavor vuelva al menu principal");
-            
+            manejarError(e, "Error al leer el archivo CSV, por favor vuelva al menú principal");
         }
     }
-    //Meneja errores de entrada y salida con la excepcion IOException con un mensaje descriptivo del error
+
+    // Maneja errores de entrada y salida con la excepción IOException con un mensaje descriptivo del error
     private static void manejarError(IOException e, String mensaje) {
-    System.err.println(mensaje + ": " + e.getMessage());
-    Errores error = new Errores(e.getMessage(), "No se logro ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
-    ControladorErrores.guardarError(error);
-}
-    //Imprime en pantalla los datos de los ingresos por encuestado además de su tipo de trabajo
+        System.err.println(mensaje + ": " + e.getMessage());
+        Errores error = new Errores(e.getMessage(), "No se logró ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
+        ControladorErrores.guardarError(error);
+    }
+
+    // Imprime en pantalla los datos de los ingresos por encuestado además de su tipo de trabajo
     public void imprimirPantalla() {
         System.out.println("Nº\tMES\tTIPO DE TRABAJO\t                INGRESOS");
         System.out.println("========================================================");
@@ -78,9 +81,9 @@ public class ControladorIngresos {
         System.out.println("");
     }
     
-    //Exporta los mismos datos mencionados a un archivo TXT
+    // Exporta los mismos datos mencionados a un archivo TXT
     public void exportarArchivo() {
-        String archivoExportado = "E:/Proyecto/IngresosMensuales.txt";
+        String archivoExportado = "IngresosMensuales.txt"; // Ruta relativa
 
         try (FileWriter escritor = new FileWriter(archivoExportado)) {
             escritor.write("Nº\tMES\tTIPO DE TRABAJO\t                INGRESOS\n");
@@ -116,4 +119,3 @@ public class ControladorIngresos {
         }
     }
 }
-

@@ -14,8 +14,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//Controlador que gestiona los motivos y barreras de los encuestados
-
+// Controlador que gestiona los motivos y barreras de los encuestados
 public class ControladorMotivosBarreras {
     private List<String[]> datosEncuesta;
     private String[] motivos;
@@ -27,8 +26,7 @@ public class ControladorMotivosBarreras {
         leerDatosEncuesta();
     }
     
-    //inicializa los motivos y barreras
-
+    // Inicializa los motivos y barreras
     private void inicializarMotivos() {
         motivos = new String[3]; 
         motivos[1] = "Si";
@@ -52,10 +50,10 @@ public class ControladorMotivosBarreras {
         barreras[0] = "Missing Value"; // Usamos el índice 0 para valores vacíos o no válidos
     }
 
-    //Lee los datos de la encuesta del archivo CSV
+    // Lee los datos de la encuesta del archivo CSV
     private void leerDatosEncuesta() {
         datosEncuesta = new ArrayList<>();
-        String archivoCSV = "E:/Proyecto/Trim Feb-Mar-Abr22_Muestra.csv";
+        String archivoCSV = "Trim Feb-Mar-Abr22_Muestra.csv"; // Ruta relativa
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
             String linea;
@@ -69,16 +67,18 @@ public class ControladorMotivosBarreras {
                 datosEncuesta.add(datos);
             }
         } catch (IOException e) {
-            manejarError(e, "Error al leer el archivo CSV, porfavor vuelva al menu principal");
+            manejarError(e, "Error al leer el archivo CSV, por favor vuelva al menú principal");
         }
     }
-    //Manejo de errores y excpeciones
+
+    // Manejo de errores y excepciones
     private static void manejarError(IOException e, String mensaje) {
-    System.err.println(mensaje + ": " + e.getMessage());
-    Errores error = new Errores(e.getMessage(), "No se logro ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
-    ControladorErrores.guardarError(error);
-}
-    //Imprime los datos de motivos y barreras en un formato ASCII
+        System.err.println(mensaje + ": " + e.getMessage());
+        Errores error = new Errores(e.getMessage(), "No se logró ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
+        ControladorErrores.guardarError(error);
+    }
+
+    // Imprime los datos de motivos y barreras en un formato ASCII
     public void imprimirPantalla() {
         System.out.println("Nº\tMES\tHUBO MOTIVO PARA BUSCAR?\tBARRERA");
         System.out.println("====================================================================");
@@ -94,9 +94,9 @@ public class ControladorMotivosBarreras {
         System.out.println("");
     }
 
-    //Exporta los datos a un archivo de texto
+    // Exporta los datos a un archivo de texto
     public void exportarArchivo() {
-        String archivoExportado = "E:/Proyecto/MotivosBarreras.txt";
+        String archivoExportado = "MotivosBarreras.txt"; // Ruta relativa
 
         try (FileWriter escritor = new FileWriter(archivoExportado)) {
             escritor.write("Nº\tMES\tHUBO MOTIVO PARA BUSCAR?\tBARRERA\n");

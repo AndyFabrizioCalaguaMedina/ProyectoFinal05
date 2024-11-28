@@ -32,10 +32,10 @@ public class ControladorGeneroEdad {
         sexo[2] = "Mujer";
     }
 
-    //Lee los datos del archivo CSV
+    // Lee los datos del archivo CSV
     private void leerDatosEncuesta() {
         datosEncuesta = new ArrayList<>();
-        String archivoCSV = "E:/Proyecto/Trim Feb-Mar-Abr22_Muestra.csv";
+        String archivoCSV = "Trim Feb-Mar-Abr22_Muestra.csv"; // Ruta relativa
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivoCSV))) {
             String linea;
@@ -49,17 +49,18 @@ public class ControladorGeneroEdad {
                 datosEncuesta.add(datos);
             }
         } catch (IOException e) {
-            manejarError(e, "Error al leer el archivo CSV, porfavor vuelva al menu principal");
+            manejarError(e, "Error al leer el archivo CSV, por favor vuelva al menú principal");
         }
     }
-    //Maneja errores gracias a IOExcption y da un mensaje descriptivo del error
+
+    // Maneja errores gracias a IOExcption y da un mensaje descriptivo del error
     private static void manejarError(IOException e, String mensaje) {
         System.err.println(mensaje + ": " + e.getMessage());
-        Errores error = new Errores(e.getMessage(), "No se logro ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
+        Errores error = new Errores(e.getMessage(), "No se logró ubicar el archivo", LocalDate.now().toString(), LocalTime.now().toString(), "Usuario");
         ControladorErrores.guardarError(error);
     }
     
-    //Imprime el cuadro de la distribucion de sexo y edad
+    // Imprime el cuadro de la distribución de sexo y edad
     public void imprimirPantalla() {
         System.out.println("Nº\tSEXO\t        EDAD");
         System.out.println("============================================");
@@ -74,9 +75,9 @@ public class ControladorGeneroEdad {
         System.out.println("");
     }
     
-    //Exporta la distribucion de los datos de sexo y edad a un archivo TXT
+    // Exporta la distribución de los datos de sexo y edad a un archivo TXT
     public void exportarArchivo() {
-        String archivoExportado = "E:/Proyecto/DistribucionGeneroEdad.txt";
+        String archivoExportado = "DistribucionGeneroEdad.txt"; // Ruta relativa
 
         try (FileWriter escritor = new FileWriter(archivoExportado)) {
             escritor.write("Nº\tSEXO\t        EDAD\n");
@@ -96,7 +97,7 @@ public class ControladorGeneroEdad {
         }
     }
 
-    //Obtiene el genero
+    // Obtiene el género
     private String obtenerTipoGeneros(String codigo) {
         try {
             int index = Integer.parseInt(codigo);
